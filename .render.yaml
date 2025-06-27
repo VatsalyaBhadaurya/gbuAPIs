@@ -1,7 +1,9 @@
 services:
   - type: web
-    name: node-api
+    name: gbu-api
     env: node
     plan: free
     buildCommand: npm install
     startCommand: npm start
+    branch: main
+    rootDir: .
