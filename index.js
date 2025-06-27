@@ -118,7 +118,7 @@ app.delete('/admin/:id', (req, res) => {
 });
 
 
-// GET all users
+// GET all ass
 app.get('/assignments', (req, res) => {
   db.query('SELECT * FROM assignments', (err, results) => {
     if (err) return res.status(500).send(err);
@@ -126,7 +126,7 @@ app.get('/assignments', (req, res) => {
   });
 });
 
-// GET user by ID
+// GET ass by ID
 app.get('/assignemnts/:id', (req, res) => {
   const { id } = req.params;
   db.query('SELECT * FROM assignments WHERE id = ?', [id], (err, results) => {
@@ -148,7 +148,7 @@ app.post('/assignments', (req, res) => {
 app.put('/assignments/:id', (req, res) => {
   const {  course_code, faculty_id, title, description, attachments, due_date, max_marks, rubric_criteria, status, auto_grade } = req.body;
   const { id } = req.params;
-  db.query('UPDATE assignments SET name = ?, email = ? WHERE id = ?', [ course_code, faculty_id, title, description, attachments, due_date, max_marks, rubric_criteria, status, auto_graded], (err) => {
+  db.query('UPDATE assignments SET name = ?, email = ? WHERE id = ?', [ course_code, faculty_id, title, description, attachments, due_date,   max_marks, rubric_criteria, status, auto_graded], (err) => {
     if (err) return res.status(500).send(err);
     res.send('assignemnts updated successfully');
   });
