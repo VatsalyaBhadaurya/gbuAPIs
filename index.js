@@ -10,7 +10,7 @@ const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'testdb'
+  database: 'test'
 });
 
 db.connect(err => {
@@ -114,6 +114,52 @@ app.delete('/admin/:id', (req, res) => {
   db.query('DELETE FROM admin WHERE id = ?', [id], (err) => {
     if (err) return res.status(500).send(err);
     res.send('Admin deleted successfully');
+  });
+});
+
+
+// GET all users
+app.get('/assignments', (req, res) => {
+  db.query('SELECT * FROM assignments', (err, results) => {
+    if (err) return res.status(500).send(err);
+    res.json(results);
+  });
+});
+
+// GET user by ID
+app.get('/assignemnts/:id', (req, res) => {
+  const { id } = req.params;
+  db.query('SELECT * FROM assignments WHERE id = ?', [id], (err, results) => {
+    if (err) return res.status(500).send(err);
+    res.json(results[0]);
+  });
+});
+
+// POST new ass
+app.post('/assignments', (req, res) => {
+  const { name, email } = req.body;
+  db.query('INSERT INTO assignments (course_code, faculty_id, title, description, attachments, due_date,max_marks, rubric_criteria, status, auto_grade) VALUES (?, ?)', [name, email], (err, result) => {
+    if (err) return res.status(500).send(err);
+    res.json({ id: result.insertId, name, email });
+  });
+});
+
+// PUT update ass
+app.put('/assignments/:id', (req, res) => {
+  const {  course_code, faculty_id, title, description, attachments, due_date, max_marks, rubric_criteria, status, auto_grade } = req.body;
+  const { id } = req.params;
+  db.query('UPDATE assignments SET name = ?, email = ? WHERE id = ?', [ course_code, faculty_id, title, description, attachments, due_date, max_marks, rubric_criteria, status, auto_graded], (err) => {
+    if (err) return res.status(500).send(err);
+    res.send('assignemnts updated successfully');
+  });
+});
+
+// DELETE ass
+app.delete('/assignemnts/:id', (req, res) => {
+  const { id } = req.params;
+  db.query('DELETE FROM assignemnts WHERE id = ?', [id], (err) => {
+    if (err) return res.status(500).send(err);
+    res.send('assignemnts deleted successfully');
   });
 });
 
